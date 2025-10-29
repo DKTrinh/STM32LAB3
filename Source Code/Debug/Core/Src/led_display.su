@@ -1,0 +1,6 @@
+led_display.c:22:6:resetAllLEDs	8	static
+led_display.c:29:6:setAllClockBuffer	16	static
+led_display.c:36:6:setHoriClockBuffer	16	static
+led_display.c:41:6:setVertClockBuffer	16	static
+led_display.c:46:6:scanLED7	16	static
+led_display.c:68:6:showLED7	16	static
