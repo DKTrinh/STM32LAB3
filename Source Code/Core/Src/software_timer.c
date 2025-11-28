@@ -23,7 +23,7 @@ void setTimer(int duration){
 }
 
 void setLED7Timer(int duration){
-    counter_led7 = duration / TIMER_INTERVAL;
+    counter_led7 = duration / (2 *TIMER_INTERVAL);
     led_7_flag = 0;
 }
 

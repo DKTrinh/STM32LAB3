@@ -1,0 +1,2 @@
+fsm.c:40:6:balance_logic	16	static
+fsm.c:67:6:fsm_output_handle	8	static

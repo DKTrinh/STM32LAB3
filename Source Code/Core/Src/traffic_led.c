@@ -19,6 +19,7 @@ static uint8_t vRed, vAmber, vGreen;
 static uint8_t tRed, tAmber, tGreen;
 
 void LED_TRAFFIC_INIT(void){
+    // Tắt hết đèn khi khởi động (Active Low: SET = OFF)
     HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(LED_AMBER1_GPIO_Port, LED_AMBER1_Pin, GPIO_PIN_SET);
@@ -37,52 +38,68 @@ void LED_TRAFFIC_STORE_BUFFER(uint8_t value, uint8_t color){
     ledBuffer[color] = value;
 }
 
+// Giống LED_VERTICAL_RUN trong mẫu: GREEN -> AMBER -> RED
 static void updateVertical(void){
+    // 1. Chạy Xanh trước
     if(vGreen > 0){
         setVertClockBuffer(vGreen);
         HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(LED_AMBER1_GPIO_Port, LED_AMBER1_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(LED_GREEN1_GPIO_Port, LED_GREEN1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_GREEN1_GPIO_Port, LED_GREEN1_Pin, GPIO_PIN_RESET); // Xanh ON
         vGreen--;
-    } else if(vAmber > 0){
+    }
+    // 2. Sau đó chạy Vàng
+    else if(vAmber > 0){
         setVertClockBuffer(vAmber);
         HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(LED_AMBER1_GPIO_Port, LED_AMBER1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_AMBER1_GPIO_Port, LED_AMBER1_Pin, GPIO_PIN_RESET); // Vàng ON
         HAL_GPIO_WritePin(LED_GREEN1_GPIO_Port, LED_GREEN1_Pin, GPIO_PIN_SET);
         vAmber--;
-    } else if(vRed > 0){
+    }
+    // 3. Cuối cùng chạy Đỏ
+    else if(vRed > 0){
         setVertClockBuffer(vRed);
-        HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, GPIO_PIN_RESET); // Đỏ ON
         HAL_GPIO_WritePin(LED_AMBER1_GPIO_Port, LED_AMBER1_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(LED_GREEN1_GPIO_Port, LED_GREEN1_Pin, GPIO_PIN_SET);
         vRed--;
     }
-    if(vRed == 0){
+
+    // Reset khi cả 3 biến đều về 0 (Logic giống code mẫu)
+    if(vGreen == 0 && vAmber == 0 && vRed == 0){
         vRed = tRed; vAmber = tAmber; vGreen = tGreen;
     }
 }
 
+// Giống LED_HORIZONTAL_RUN trong mẫu: RED -> GREEN -> AMBER
 static void updateHorizontal(void){
+    // 1. Chạy Đỏ trước
     if(hRed > 0){
         setHoriClockBuffer(hRed);
-        HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, GPIO_PIN_RESET); // Đỏ ON
         HAL_GPIO_WritePin(LED_AMBER2_GPIO_Port, LED_AMBER2_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, GPIO_PIN_SET);
         hRed--;
-    } else if(hAmber > 0){
-        setHoriClockBuffer(hAmber);
-        HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(LED_AMBER2_GPIO_Port, LED_AMBER2_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, GPIO_PIN_SET);
-        hAmber--;
-    } else if(hGreen > 0){
+    }
+    // 2. QUAN TRỌNG: Sửa thứ tự thành Xanh (giống code mẫu)
+    else if(hGreen > 0){
         setHoriClockBuffer(hGreen);
         HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(LED_AMBER2_GPIO_Port, LED_AMBER2_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, GPIO_PIN_RESET); // Xanh ON
         hGreen--;
     }
-    if(hGreen == 0){
+    // 3. Cuối cùng là Vàng (giống code mẫu)
+    else if(hAmber > 0){
+        setHoriClockBuffer(hAmber);
+        HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(LED_AMBER2_GPIO_Port, LED_AMBER2_Pin, GPIO_PIN_RESET); // Vàng ON
+        HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, GPIO_PIN_SET);
+        hAmber--;
+    }
+
+    // Reset khi cả 3 biến đều về 0
+    if(hRed == 0 && hGreen == 0 && hAmber == 0){
         hRed = tRed; hAmber = tAmber; hGreen = tGreen;
     }
 }

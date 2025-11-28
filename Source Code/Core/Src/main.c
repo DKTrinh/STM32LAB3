@@ -9,7 +9,7 @@
 #include "software_timer.h"
 #include "traffic_led.h"
 #include "led_display.h"
-#include "input_processing.h"
+#include "fsm.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -189,8 +189,8 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, EN1_Pin|EN2_Pin|EN3_Pin|LED_RED1_Pin
-                          |LED_GREEN1_Pin|LED_AMBER1_Pin|LED_RED2_Pin|LED_AMBER2_Pin
-                          |LED_GREEN2_Pin|EN0_Pin, GPIO_PIN_RESET);
+                          |LED_GREEN1_Pin|LED_AMBER1_Pin|LED_RED2_Pin|LED_GREEN2_Pin
+                          |LED_AMBER2_Pin|EN0_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : SEG_A_Pin SEG_B_Pin SEG_C_Pin SEG_D_Pin
                            SEG_E_Pin SEG_F_Pin SEG_G_Pin */
@@ -208,11 +208,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : EN1_Pin EN2_Pin EN3_Pin LED_RED1_Pin
-                           LED_GREEN1_Pin LED_AMBER1_Pin LED_RED2_Pin LED_AMBER2_Pin
-                           LED_GREEN2_Pin EN0_Pin */
+                           LED_GREEN1_Pin LED_AMBER1_Pin LED_RED2_Pin LED_GREEN2_Pin
+                           LED_AMBER2_Pin EN0_Pin */
   GPIO_InitStruct.Pin = EN1_Pin|EN2_Pin|EN3_Pin|LED_RED1_Pin
-                          |LED_GREEN1_Pin|LED_AMBER1_Pin|LED_RED2_Pin|LED_AMBER2_Pin
-                          |LED_GREEN2_Pin|EN0_Pin;
+                          |LED_GREEN1_Pin|LED_AMBER1_Pin|LED_RED2_Pin|LED_GREEN2_Pin
+                          |LED_AMBER2_Pin|EN0_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
