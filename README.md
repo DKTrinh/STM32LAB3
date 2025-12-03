@@ -28,3 +28,7 @@ Its operation is defined as follows:
     * **Adjustment:**
         * The system remains in this state or performs selection logic if `Button 2 = 1`.
         * The **Modify green led time** action is executed when `Button 3 = 1` is detected, updating the Green LED timing before returning to the state wait loop.
+
+## Video Demonstration
+For a visual demonstration of the system in operation, please refer to the video linked below:
+[**Watch Project Video (Google Drive)**]([https://drive.google.com/drive/folders/1h-v0FBVv0vXKfkmSQ4lQilD3oaQ8ZDU_?usp=sharing](https://drive.google.com/drive/folders/1WiqQAwh8Ci2PWZe7i7Og9IEMaFVuzDOf?usp=sharing))
