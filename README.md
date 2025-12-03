@@ -31,4 +31,4 @@ Its operation is defined as follows:
 
 ## Video Demonstration
 For a visual demonstration of the system in operation, please refer to the video linked below:
-[**Watch Project Video (Google Drive)**]([https://drive.google.com/drive/folders/1h-v0FBVv0vXKfkmSQ4lQilD3oaQ8ZDU_?usp=sharing](https://drive.google.com/drive/folders/1WiqQAwh8Ci2PWZe7i7Og9IEMaFVuzDOf?usp=sharing))
+[**Watch Project Video (Google Drive)**](https://drive.google.com/drive/folders/1WiqQAwh8Ci2PWZe7i7Og9IEMaFVuzDOf?usp=sharing)
